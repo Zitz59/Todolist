@@ -12,7 +12,7 @@ function App() {
     const tasks2 = [
         {id:1 , title:"Math", isDone:true},
         {id:2 , title:"Literature", isDone:false},
-        {id:3 , title:"Athletics", isDone:false}]
+        {id:3 , title:"Athletics", isDone:true}]
 
 
 
