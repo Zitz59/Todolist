@@ -42,35 +42,26 @@ function App() {
         console.log(filter)
     }
 
+    function changeTaskStatus(taskID: string, isDone: boolean) {
+        const updatedTask = tasks.map(t => t.id === taskID ? {...t, isDone: isDone} : t)
+        setTasks(updatedTask)
+    }//tasks mapping=>if task.id === id => {old tasks massive + new task with isDone(status)}
+    //we create new object copy with changes and set it to  old tasks massive(setTasks)
 
-    /* let tasks: TaskType[] =  [
-         {id: 1, title: "HTML & CSS", isDone: true},
-         {id: 2, title: "JS", isDone: true},
-         {id: 3, title: "ReactJS", isDone: false}
-     ]
- */
 //=======================================================================
     //UI:
-    let tasksForRender;
-    switch (filter) {
-        case 'completed':
-            tasksForRender = tasks.filter(t => t.isDone)
-            break
-        case 'active':
-            tasksForRender = tasks.filter(t => !t.isDone)
-            break
-        default:
-            tasksForRender = tasks
-    }
-    console.log(tasksForRender)
+
     return (
         <div className="App">
-            <TodoList
+            <TodoList // Todolist function call with other functions({})
+                filter={filter}
                 title={todoListTitle}
-                tasks={tasksForRender}
+                tasks={tasks}
+
                 addTask={addTask}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
+                changeTaskStatus={changeTaskStatus}
 
             />
         </div>
