@@ -6,3 +6,23 @@
 .App > div {
   margin-right: 50px;
 }
+
+.activeFilter{
+  background-color: #3d91e4;
+}
+
+.isDone {
+  opacity: 0.5;
+  font-weight: bold;
+
+}
+
+.error{
+  border: 3px solid crimson;
+  outline: none;
+}
+
+.errorMessage{
+  color: crimson;
+  font-weight: bold;
+}
