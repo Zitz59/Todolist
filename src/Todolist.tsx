@@ -60,7 +60,7 @@ export function Todolist(props: PropsType) {
                     }
 
                     return <li key={t.id} className={t.isDone ? 'is-done' : ''}>
-                        <Checkbox color={'primary'} onChange={onChangeHandler} checked={t.isDone}/>
+                        <Checkbox defaultChecked onChange={onChangeHandler} checked={t.isDone}/>
                         {/*<span>{t.title}</span>*/}
                         <EditableSpan title={t.title} callBack={(newTitle) => editTaskHandler(t.id, newTitle)}/>
                         <IconButton aria-label={'delete'} onClick={onClickHandler}><Delete/></IconButton>
@@ -69,20 +69,19 @@ export function Todolist(props: PropsType) {
             }
         </ul>
         <div>
-            <Button className={props.filter === 'all' ? 'active-filter' : ''}
+            <Button variant={props.filter === 'all' ? 'outlined' : 'contained'}
                     onClick={onAllClickHandler}
-                    color={'default'}
-                    variant={'contained'}>All
+                    style={{backgroundColor:"#FFC0CB"}}
+                    >All
             </Button>
-            <Button className={props.filter === 'active' ? 'active-filter' : ''}
+            <Button variant={props.filter === 'active' ? 'outlined' : 'contained'}
                     onClick={onActiveClickHandler}
-                    color={'primary'}
-            variant={'outlined'}>Active
+                    style={{backgroundColor:"#FFD4C0"}}
+            >Active
             </Button>
-            <Button className={props.filter === 'completed' ? 'active-filter' : ''}
+            <Button
                     onClick={onCompletedClickHandler}
-                    color={'secondary'}
-                    variant={'outlined'}>Completed
+                    variant={props.filter === 'completed' ? 'outlined' : 'contained'}>Completed
             </Button>
         </div>
     </div>
