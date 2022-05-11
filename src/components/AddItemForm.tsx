@@ -7,12 +7,12 @@ type AddItemFormPropsType = {
 
 export function AddItemForm(props: AddItemFormPropsType) {
     let [title, setTitle] = useState('')
-    let [error, setError] = useState<string | null>(null)
+    let [error, setError] = useState<boolean>(false)
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+        setError(false);
         if (e.charCode === 13) {
             addTask();
         }
@@ -23,20 +23,25 @@ export function AddItemForm(props: AddItemFormPropsType) {
             props.callBack(newTitle);
             setTitle('');
         } else {
-            setError('Title is required');
+            setError(true);
         }
     }
 
     return (
         <div>
-            <TextField variant={'outlined'}
+            <TextField
+                id='outlined-basic'
+                label={!error? 'Enter text' : 'Title is required'}
+                variant={'outlined'}
+                size='small'
                 value={title}
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
-                   className={error ? 'error' : ''}
+                error={error}
+                   // className={error ? 'error' : ''}
             />
-            <Button  variant={"contained"} color={"primary"} onClick={addTask}>x</Button>
-            {error && <div className="error-message">{error}</div>}
+            <Button  variant={"contained"} color={"primary"} onClick={addTask} style={{maxWidth:"39px",maxHeight:"39px",minWidth:"39px",minHeight:"39px",backgroundColor:"pink"}}>x</Button>
+            {/*{error && <div className="error-message">{error}</div>}*/}
         </div>
     )
 }
