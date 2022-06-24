@@ -1,5 +1,6 @@
-import {addTaskAC, changeTaskStatusAC, removeTaskAC, tasksReducer} from './task-reducer';
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './task-reducer';
 import {TasksStateType} from '../App';
+import {addTodolistAC} from './todolists-reducer';
 
 test('correct task should be deleted from correct array', () => {
     const statState: TasksStateType = {
@@ -71,7 +72,62 @@ test('status of specified task should be changed', () => {
 
     const endState = tasksReducer(startState, action)
 
-    expect(endState['todolistId1'][1].isDone).toBe(true);
-    expect(endState['todolistId2'][1].isDone).toBe(false);
+    expect(endState['todolistId1'][1].isDone).toBeTruthy();
+    expect(endState['todolistId2'][1].isDone).toBeFalsy();
 });
+
+
+test('title of specified task should be changed', () => {
+    const startState: TasksStateType = {
+        'todolistId1': [
+            {id: '1', title: 'CSS', isDone: false},
+            {id: '2', title: 'JS', isDone: true},
+            {id: '3', title: 'React', isDone: false}
+        ],
+        'todolistId2': [
+            {id: '1', title: 'bread', isDone: false},
+            {id: '2', title: 'milk', isDone: true},
+            {id: '3', title: 'tea', isDone: false}
+        ]
+    };
+
+    const action = changeTaskTitleAC('2', 'Ritter Sport', 'todolistId2');
+
+    const endState = tasksReducer(startState, action)
+
+    expect(endState['todolistId1'][1].title).toBe('JS');
+    expect(endState['todolistId2'][1].title).toBe('Ritter Sport');
+});
+
+
+test('new array should be added when new todolist is added', () => {
+    const startState: TasksStateType = {
+        'todolistId1': [
+            {id: '1', title: 'CSS', isDone: false},
+            {id: '2', title: 'JS', isDone: true},
+            {id: '3', title: 'React', isDone: false}
+        ],
+        'todolistId2': [
+            {id: '1', title: 'bread', isDone: false},
+            {id: '2', title: 'milk', isDone: true},
+            {id: '3', title: 'tea', isDone: false}
+        ]
+    };
+
+    const action = addTodolistAC('new todolist');
+
+    const endState = tasksReducer(startState, action)
+
+
+    const keys = Object.keys(endState);//создаём массив ключей
+    const newKey = keys.find(k => k != 'todolistId1' && k != 'todolistId2');//ищем не 1 и не 2 ключ
+    if (!newKey) {
+        throw Error('new key should be added')
+    }
+
+    expect(keys.length).toBe(3);
+    expect(endState[newKey]).toEqual([]);
+});
+
+
 
