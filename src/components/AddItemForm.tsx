@@ -13,7 +13,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(false);
-        if (e.charCode === 13) {
+        if (e.key === 'Enter') {
             addTask();
         }
     }
