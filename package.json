@@ -1,8 +1,9 @@
 {
+
+  "homepage": "https://zitz59/github.io/",
   "name": "it-incubator-todolist-ts",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Zitz59/github.io/Todolist",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
