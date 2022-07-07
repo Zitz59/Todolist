@@ -5,43 +5,54 @@ type AddItemFormPropsType = {
     callBack: (newTitle: string) => void
 }
 
-export function AddItemForm(props: AddItemFormPropsType) {
+export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
+    console.log('AddItemForm is called')
+
     let [title, setTitle] = useState('')
-    let [error, setError] = useState<boolean>(false)
+    let [error, setError] = useState<string | null>(null)
+
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(false);
+        if (error) setError(null)
         if (e.key === 'Enter') {
             addTask();
         }
     }
     const addTask = () => {
         let newTitle = title.trim();
-        if (newTitle!== '') {
+        if (newTitle !== '') {
             props.callBack(newTitle);
             setTitle('');
         } else {
-            setError(true);
+            setError('Title is required');
         }
     }
 
     return (
         <div>
             <TextField
-                id='outlined-basic'
-                label={!error? 'Enter text' : 'Title is required'}
+                id="outlined-basic"
+                label={!error ? 'Enter text' : 'Title is required'}
                 variant={'outlined'}
-                size='small'
+                size="small"
                 value={title}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                error={error}
-                   // className={error ? 'error' : ''}
+                onChange={onChangeHandler}
+                onKeyPress={onKeyPressHandler}
+                error={!!error}
+                // className={error ? 'error' : ''}
             />
-            <Button  variant={"contained"} color={"primary"} onClick={addTask} style={{maxWidth:"39px",maxHeight:"39px",minWidth:"39px",minHeight:"39px",backgroundColor:"pink"}}>x</Button>
+            <Button variant={'contained'} color={'primary'} onClick={addTask} style={{
+                maxWidth: '39px',
+                maxHeight: '39px',
+                minWidth: '39px',
+                minHeight: '39px',
+                backgroundColor: 'pink'
+            }}>+</Button>
             {/*{error && <div className="error-message">{error}</div>}*/}
         </div>
     )
-}
+})
+
+// export function AddItemForm(props: AddItemFormPropsType) {
