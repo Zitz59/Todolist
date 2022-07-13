@@ -42,10 +42,10 @@ export const Todolist = React.memo((props: PropsType) => {
     let tasksForTodolist = props.tasks;
 
     if (props.filter === 'active') {
-        tasksForTodolist = tasksForTodolist.filter(t => !t.isDone);
+        tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false);
     }
     if (props.filter === 'completed') {
-        tasksForTodolist = tasksForTodolist.filter(t => !t.isDone);
+        tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true);
     }
 
     const editTodolistHandler = useCallback((newTitle: string) => {
@@ -87,5 +87,5 @@ export const Todolist = React.memo((props: PropsType) => {
     </div>
 })
 
-const FilterComponent = (props: FilterValuesType) => {
-}
+// const FilterComponent = (props: FilterValuesType) => {
+// }
