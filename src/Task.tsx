@@ -2,13 +2,13 @@ import React, {ChangeEvent, useCallback} from 'react';
 import {Checkbox, IconButton} from '@material-ui/core';
 import EditableSpan from './components/EditableSpan';
 import {Delete} from '@material-ui/icons';
-import {TaskType} from './Todolist';
+import {TaskStatuses, TaskType} from './api/todolists-api';
 
 
 type TaskPropsType = {
     task: TaskType
     removeTask: (taskID: string, todolistId: string) => void
-    changeTaskStatus: (taskID: string, status: boolean, todolistId: string) => void
+    changeTaskStatus: (taskID: string, status: TaskStatuses, todolistId: string) => void
     changeTaskTitle: (taskID: string, title: string, todolistId: string) => void
     todolistId: string
 }
@@ -19,7 +19,7 @@ export const Task = React.memo(({task, removeTask, changeTaskStatus, changeTaskT
     const onClickHandler = useCallback(() => removeTask(task.id, todolistId), [task.id, removeTask, todolistId])
     const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
-        changeTaskStatus(task.id, newIsDoneValue, todolistId);
+        changeTaskStatus(task.id, newIsDoneValue? TaskStatuses.Completed : TaskStatuses.New, todolistId);
     }, [task.id, changeTaskStatus, todolistId])
     const onTitleChangeHAndler = useCallback((newValue: string) => {
             changeTaskTitle(task.id, newValue, todolistId)
@@ -28,9 +28,9 @@ export const Task = React.memo(({task, removeTask, changeTaskStatus, changeTaskT
 
 
     return (
-        <div key={task.id} className={task.isDone ? 'is-done' : ''}>
-            <Checkbox defaultChecked onChange={onChangeHandler} checked={task.isDone}/>
-            <EditableSpan title={task.title} callBack={(newTitle) => onTitleChangeHAndler}/>
+        <div key={task.id} className={task.status===TaskStatuses.Completed ? 'is-done' : ''}>
+            <Checkbox defaultChecked onChange={onChangeHandler} checked={task.status === TaskStatuses.Completed}/>
+            <EditableSpan title={task.title} callBack={onTitleChangeHAndler}/>
             <IconButton aria-label={'delete'} onClick={onClickHandler}><Delete/></IconButton>
         </div>
     )
